@@ -19,11 +19,12 @@ namespace W5G7GZ_HFT_2023241.Repository
         {
             if (!builder.IsConfigured)
             {
-                string conn =
-                  @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename =|DataDirectory|\Database.mdf; Integrated Security = True";
+                //string conn =
+                //  @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename =|DataDirectory|\Database.mdf; Integrated Security = True; MultipleActiveResultSets=true";
                 builder
                     .UseLazyLoadingProxies()
-                    .UseSqlServer(conn);
+                    //.UseSqlServer(conn)
+                    .UseInMemoryDatabase("BookStore");
             }
         }
 
@@ -68,6 +69,8 @@ namespace W5G7GZ_HFT_2023241.Repository
             Book book12 = new Book(12, 4, 2, 2290, "A láthatatlan ember", "Novel", "9789635546073", DateTime.Parse("1930.01.01"));
             Book book13 = new Book(13, 5, 1, 1990, "The Choice: Embrace the Possible", "Biography", "9781501130786", DateTime.Parse("2017.09.05"));
             Book book14 = new Book(14, 5, 1, 2490, "The Gift: 12 Lessons to Save Your Life", "Self.Help", "9781984800406", DateTime.Parse("2020.09.15"));
+            
+
 
 
             modelBuilder.Entity<Publisher>().HasData(libri, akademiai, corvina);
