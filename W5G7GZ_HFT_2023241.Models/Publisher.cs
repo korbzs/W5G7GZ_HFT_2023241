@@ -20,5 +20,17 @@ namespace W5G7GZ_HFT_2023241.Models
 
         [NotMapped]
         public virtual ICollection<Book> Books { get; set; }
+
+        public Publisher(int publisherID, string publisherName, string headquarters, int foundatitonYear)
+        {
+            PublisherID = publisherID;
+            PublisherName = publisherName;
+            Headquarters = headquarters;
+            FoundatitonYear = foundatitonYear;
+        }
+
+        public Publisher()
+        {
+        }
     }
-}2
+}

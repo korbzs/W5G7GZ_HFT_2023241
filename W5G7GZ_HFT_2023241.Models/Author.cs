@@ -20,6 +20,17 @@ namespace W5G7GZ_HFT_2023241.Models
 
         [NotMapped]
         public virtual ICollection<Book> Books { get; set; }
+
+        public Author(int authorID, string authorName, DateTime birthDate, string nationality)
+        {
+            AuthorID = authorID;
+            AuthorName = authorName;
+            BirthDate = birthDate;
+            Nationality = nationality;
+        }
+        public Author()
+        {
+        }
     }
 
 }
