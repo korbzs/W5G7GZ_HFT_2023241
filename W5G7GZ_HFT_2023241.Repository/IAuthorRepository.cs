@@ -10,10 +10,10 @@ namespace W5G7GZ_HFT_2023241.Repository
 {
     public interface IAuthorRepository
     {
-        void AddCar(Author author);
+        void AddAuthor(Author author);
         void ChangeName(Author author);
         IQueryable<Author> GetAll();
         Author GetOne(int ID);
-        void Delete(int ID;
+        void Delete(int ID);
     }
 }
