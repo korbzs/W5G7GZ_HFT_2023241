@@ -4,7 +4,7 @@ using W5G7GZ_HFT_2023241.Repository;
 
 namespace W5G7GZ_HFT_2023241.Client
 {
-    internal class Program
+    public class Program
     {
         static void Main(string[] args)
         {
