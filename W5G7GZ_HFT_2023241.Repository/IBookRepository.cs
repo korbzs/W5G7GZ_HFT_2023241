@@ -9,10 +9,10 @@ namespace W5G7GZ_HFT_2023241.Repository
 {
     public interface IBookRepository
     {
-        void AddBook(Book book);
-        void ChangePrice(Book book);
-        IQueryable<Book> GetAll();
+        public void Add(Book book);
+        void Update(Book book);
         Book GetOne(int ID);
+        IQueryable<Book> GetAll();
         void Delete(int ID);
     }
 }

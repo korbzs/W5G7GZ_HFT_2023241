@@ -15,17 +15,29 @@ namespace W5G7GZ_HFT_2023241.Repository
         {
             this.ctx = ctx;
         }
-        public void AddPublisher(Publisher publisher)
+
+        public void Add(Publisher publisher)
         {
             ctx.Add(publisher);
             ctx.SaveChanges();
         }
 
-        public void ChangeHeadquarters(Publisher publisher)
+        public void Update(Publisher publisher)
         {
-            var publisher1 = GetOne(publisher.PublisherID);
-            publisher1.Headquarters = publisher.Headquarters;
+            var old = GetOne(publisher.PublisherID);
+            foreach (var prop in old.GetType().GetProperties())
+            {
+                prop.SetValue(old, prop.GetValue(publisher));
+            }
             ctx.SaveChanges();
+        }
+        public Publisher GetOne(int ID)
+        {
+            return GetAll().FirstOrDefault(x => x.PublisherID == ID);
+        }
+        public IQueryable<Publisher> GetAll()
+        {
+            return ctx.Publishers;
         }
 
         public void Delete(int ID)
@@ -33,16 +45,6 @@ namespace W5G7GZ_HFT_2023241.Repository
             var todelete = GetOne(ID);
             ctx.Remove(todelete);
             ctx.SaveChanges();
-        }
-
-        public IQueryable<Publisher> GetAll()
-        {
-            return ctx.Publishers;
-        }
-
-        public Publisher GetOne(int ID)
-        {
-            return GetAll().FirstOrDefault(x => x.PublisherID == ID);
         }
     }
 }

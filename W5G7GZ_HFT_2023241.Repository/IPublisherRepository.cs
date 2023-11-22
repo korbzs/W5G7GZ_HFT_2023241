@@ -9,10 +9,10 @@ namespace W5G7GZ_HFT_2023241.Repository
 {
     public interface IPublisherRepository
     {
-        void AddPublisher(Publisher publisher);
-        void ChangeHeadquarters(Publisher publisher);
-        IQueryable<Publisher> GetAll();
+        void Add(Publisher publisher);
+        public void Update(Publisher publisher);
         Publisher GetOne(int ID);
+        IQueryable<Publisher> GetAll();
         void Delete(int ID);
     }
 }

@@ -15,34 +15,35 @@ namespace W5G7GZ_HFT_2023241.Repository
         {
             this.ctx = ctx;
         }
-        public void AddBook(Book book)
+
+        public void Add(Book book)
         {
             ctx.Add(book);
             ctx.SaveChanges();
         }
 
-        public void ChangePrice(Book book)
+        public void Update(Book book)
         {
-            var book1 = GetOne(book.BookID);
-            book1.Price = book.Price;
+            var old = GetOne(book.BookID);
+            foreach (var prop in old.GetType().GetProperties())
+            {
+                prop.SetValue(old, prop.GetValue(book));
+            }
             ctx.SaveChanges();
         }
-
+        public Book GetOne(int ID)
+        {
+            return GetAll().FirstOrDefault(x => x.BookID == ID);
+        }
+        public IQueryable<Book> GetAll()
+        {
+            return ctx.Books;
+        }
         public void Delete(int ID)
         {
             var todelete = GetOne(ID);
             ctx.Remove(todelete);
             ctx.SaveChanges();
-        }
-
-        public IQueryable<Book> GetAll()
-        {
-            return ctx.Books;
-        }
-
-        public Book GetOne(int ID)
-        {
-            return GetAll().FirstOrDefault(x => x.BookID == ID);
         }
     }
 }

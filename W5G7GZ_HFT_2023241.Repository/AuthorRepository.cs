@@ -15,21 +15,30 @@ namespace W5G7GZ_HFT_2023241.Repository
         {
             this.ctx = ctx;
         }
-        public void AddAuthor(Author author)
+        public void Add(Author author)
         {
             ctx.Add(author);
             ctx.SaveChanges();
         }
 
-        public void ChangeName(Author author)
+        public void Update(Author author)
         {
-            var author1 = GetOne(author.AuthorID);
-            author1.AuthorName = author.AuthorName;
-            author1.BirthDate = author.BirthDate;
-            author1.Nationality = author.Nationality;
+            var old = GetOne(author.AuthorID);
+            foreach (var prop in old.GetType().GetProperties())
+            {
+                prop.SetValue(old, prop.GetValue(author));
+            }
             ctx.SaveChanges();
         }
 
+        public Author GetOne(int ID)
+        {
+            return GetAll().FirstOrDefault(x => x.AuthorID == ID);
+        }
+        public IQueryable<Author> GetAll()
+        {
+            return ctx.Authors;
+        }
         public void Delete(int ID)
         {
             var todelete = GetOne(ID);
@@ -37,14 +46,6 @@ namespace W5G7GZ_HFT_2023241.Repository
             ctx.SaveChanges();
         }
 
-        public IQueryable<Author> GetAll()
-        {
-            return ctx.Authors;
-        }
 
-        public Author GetOne(int ID)
-        {
-            return GetAll().FirstOrDefault(x => x.AuthorID == ID);
-        }
     }
 }
