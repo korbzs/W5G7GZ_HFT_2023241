@@ -11,7 +11,7 @@ namespace W5G7GZ_HFT_2023241.Models
     public class Book
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // automatikusan generalodik
         public int BookID { get; set; }
 
         [ForeignKey("Author")]
