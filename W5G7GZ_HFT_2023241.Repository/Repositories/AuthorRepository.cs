@@ -5,9 +5,9 @@ using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 using W5G7GZ_HFT_2023241.Models;
-using W5G7GZ_HFT_2023241.Repository.Repositories;
+using W5G7GZ_HFT_2023241.Repository.RepositoryInterfaces;
 
-namespace W5G7GZ_HFT_2023241.Repository
+namespace W5G7GZ_HFT_2023241.Repository.Repositories
 {
     public class AuthorRepository : IAuthorRepository
     {
