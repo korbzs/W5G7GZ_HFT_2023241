@@ -31,8 +31,9 @@ namespace W5G7GZ_HFT_2023241.Models
         [NotMapped]
         public virtual Publisher Publisher { get; set; }
 
-        public Book( int authorID, int publisherID, int price, string title, string genre, string iSBN, DateTime publicationDate)
+        public Book(int bookID, int authorID, int publisherID, int price, string title, string genre, string iSBN, DateTime publicationDate)
         {
+            BookID = bookID;
             AuthorID = authorID;
             PublisherID = publisherID;
             Price = price;
