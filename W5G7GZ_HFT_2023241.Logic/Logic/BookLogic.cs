@@ -12,7 +12,6 @@ namespace W5G7GZ_HFT_2023241.Logic.Logic
 {
     public class BookLogic : IBookLogic
     {
-
         IRepository<Author> AuthorRepo;
         IRepository<Book> BookRepo;
         IRepository<Publisher> PublisherRepo;
@@ -24,6 +23,7 @@ namespace W5G7GZ_HFT_2023241.Logic.Logic
             this.PublisherRepo = PublisherRepo;
         }
 
+        //crud
         public void Create(Book item)
         {
             if (item.Title.Length < 1)
@@ -50,7 +50,7 @@ namespace W5G7GZ_HFT_2023241.Logic.Logic
         {
             return this.BookRepo.ReadAll();
         }
-
+        //non-crud
         public IEnumerable<KeyValuePair<string, int>> BookCountPerPublisher()
         {
             var bookCounts = BookRepo.ReadAll()
@@ -71,5 +71,35 @@ namespace W5G7GZ_HFT_2023241.Logic.Logic
             return authorWithMostBooks;
         }
 
+        public int PriceOfAllBooks()
+        {
+            var Prices = from x in BookRepo.ReadAll()
+                        group x by x.BookID into g
+                        select g.Sum(x => x.Price);
+            int Total = 0;
+            foreach(var item in Prices)
+            {
+                Total += item;
+            }
+            return Total;
+        }
+        public IEnumerable<string> AuthorsWithMultipleBooks()
+        {
+            var authorsWithMultipleBooks = BookRepo.ReadAll()
+                .GroupBy(b => b.Author.AuthorName)
+                .Where(group => group.Count() > 1)
+                .Select(group => group.Key);
+
+            return authorsWithMultipleBooks;
+        }
+        public IEnumerable<dynamic> GenresForAuthors()
+        {
+            var genresForAuthors = from author in AuthorRepo.ReadAll()
+                                   join book in BookRepo.ReadAll() on author.AuthorID equals book.Author.AuthorID
+                                   group book.Genre by author.AuthorName into genreGroup
+                                   select new { AuthorName = genreGroup.Key, Genres = genreGroup.ToList() };
+
+            return genresForAuthors;
+        }
     }
 }
