@@ -31,6 +31,11 @@ namespace W5G7GZ_HFT_2023241.Models
         public Author()
         {
         }
+
+        public override string ToString()
+        {
+            return $"{AuthorID}\t{AuthorName}\t{BirthDate.Year}\t{Nationality}";
+        }
     }
 
 }

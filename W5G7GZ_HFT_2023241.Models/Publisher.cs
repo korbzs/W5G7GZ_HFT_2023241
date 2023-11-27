@@ -32,5 +32,9 @@ namespace W5G7GZ_HFT_2023241.Models
         public Publisher()
         {
         }
+        public override string ToString()
+        {
+            return $"{PublisherID}\t{PublisherName}\t{Headquarters}\t{FoundatitonYear}";
+        }
     }
 }

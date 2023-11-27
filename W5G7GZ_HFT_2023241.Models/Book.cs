@@ -31,9 +31,9 @@ namespace W5G7GZ_HFT_2023241.Models
         [NotMapped]
         public virtual Publisher Publisher { get; set; }
 
-        public Book(int bookID, int authorID, int publisherID, int price, string title, string genre, string iSBN, DateTime publicationDate)
+        public Book(int authorID, int publisherID, int price, string title, string genre, string iSBN, DateTime publicationDate)
         {
-            BookID = bookID;
+            //BookID = bookID;
             AuthorID = authorID;
             PublisherID = publisherID;
             Price = price;
@@ -45,6 +45,11 @@ namespace W5G7GZ_HFT_2023241.Models
 
         public Book()
         {
+        }
+
+        public override string ToString()
+        {
+            return $"{BookID}\t{Title}\t{Author?.AuthorName}\t{Price}\t{Genre}\t{ISBN}\t{PublicationDate.Year}";
         }
     }
 }
