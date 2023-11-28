@@ -31,7 +31,12 @@ namespace W5G7GZ_HFT_2023241.Logic.Logic
         }
         public Author Read(int id)
         {
-            return this.repo.Read(id);
+            var author = this.repo.Read(id);
+            if(author == null)
+            {
+                throw new ArgumentException("Author does not exist");
+            }
+            return author;
         }
         public void Update(Author item)
         {

@@ -30,11 +30,20 @@ namespace W5G7GZ_HFT_2023241.Logic.Logic
             {
                 throw new ArgumentException("Book name is too short...");
             }
+            if(item.Price < 0)
+            {
+                throw new ArgumentException("Book price can't be negative");
+            }
             this.BookRepo.Create(item);
         }
         public Book Read(int id)
         {
-            return this.BookRepo.Read(id);
+            var book = this.BookRepo.Read(id);
+            if(book == null)
+            {
+                throw new InvalidOperationException("Boook does not exist");
+            }
+            return book;
         }
         public void Update(Book item)
         {
@@ -76,12 +85,7 @@ namespace W5G7GZ_HFT_2023241.Logic.Logic
             var Prices = from x in BookRepo.ReadAll()
                         group x by x.BookID into g
                         select g.Sum(x => x.Price);
-            int Total = 0;
-            foreach(var item in Prices)
-            {
-                Total += item;
-            }
-            return Total;
+            return Prices.Sum();
         }
         public IEnumerable<string> AuthorsWithMultipleBooks()
         {
@@ -94,12 +98,26 @@ namespace W5G7GZ_HFT_2023241.Logic.Logic
         }
         public IEnumerable<dynamic> GenresForAuthors()
         {
+
             var genresForAuthors = from author in AuthorRepo.ReadAll()
-                                   join book in BookRepo.ReadAll() on author.AuthorID equals book.Author.AuthorID
+                                   join book in BookRepo.ReadAll() on author.AuthorID equals AuthorIDForBook(book)
+                                   where book != null
                                    group book.Genre by author.AuthorName into genreGroup
                                    select new { AuthorName = genreGroup.Key, Genres = genreGroup.ToList() };
 
             return genresForAuthors;
+        }
+
+        private int AuthorIDForBook(Book book)
+        {
+            if (book.Author != null)
+            {
+                return book.Author.AuthorID;
+            }
+            else
+            {
+                return -1; // ID can't be negative
+            }
         }
     }
 }
