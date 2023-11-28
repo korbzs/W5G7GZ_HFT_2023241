@@ -26,9 +26,9 @@ namespace W5G7GZ_HFT_2023241.Test
                 Mock<IRepository<Author>> mockedAuthorRepo = new Mock<IRepository<Author>>();
                 Mock<IRepository<Publisher>> mockedPublisherRepo = new Mock<IRepository<Publisher>>();
 
-                mockedBookRepo.Setup(x => x.ReadAll()).Returns(FakeBookObjects().AsQueryable());
-                mockedAuthorRepo.Setup(x => x.ReadAll()).Returns(FakeAuthorObjects().AsQueryable());
-                mockedPublisherRepo.Setup(x => x.ReadAll()).Returns(FakePublisherObjects().AsQueryable());
+                //mockedBookRepo.Setup(x => x.ReadAll()).Returns(FakeBookObjects().AsQueryable());
+                //mockedAuthorRepo.Setup(x => x.ReadAll()).Returns(FakeAuthorObjects().AsQueryable());
+                //mockedPublisherRepo.Setup(x => x.ReadAll()).Returns(FakePublisherObjects().AsQueryable());
 
                 this.bookLogic = new BookLogic(mockedBookRepo.Object, mockedAuthorRepo.Object, mockedPublisherRepo.Object);
             }
@@ -36,21 +36,21 @@ namespace W5G7GZ_HFT_2023241.Test
             [Test]
             public void Create_WithValidBook_ShouldAddBook()
             {
-                var newBook = new Book(11, 2, 2890, "Test Book", "Test Genre", "1234567890", DateTime.Now);
+                var newBook = new Book(11, 2, 2890, "Test Book", "Test Genre", "1234567890", 1941);
                 Assert.That(() => this.bookLogic.Create(newBook), Throws.Nothing);
             }
 
             [Test]
             public void Create_WithShortTitle_ShouldThrowArgumentException()
             {
-                var invalidBook = new Book(12, 2, 2890, "", "Test Genre", "1234567890", DateTime.Now);
+                var invalidBook = new Book(12, 2, 2890, "", "Test Genre", "1234567890", 1928);
                 Assert.That(() => this.bookLogic.Create(invalidBook), Throws.TypeOf<ArgumentException>());
             }
 
             [Test]
             public void Create_WithNegativePrice_ShouldThrowArgumentException()
             {
-                var invalidBook = new Book(13, 2, -100, "Invalid Book", "Test Genre", "1234567890", DateTime.Now);
+                var invalidBook = new Book(13, 2, -100, "Invalid Book", "Test Genre", "1234567890", 1876);
                 Assert.That(() => this.bookLogic.Create(invalidBook), Throws.TypeOf<ArgumentException>());
             }
 
@@ -69,20 +69,20 @@ namespace W5G7GZ_HFT_2023241.Test
 
             // Add similar tests for other methods...
 
-            private List<Book> FakeBookObjects()
-            {
-                // Define your fake book objects here...
-            }
+            //private List<Book> FakeBookObjects()
+            //{
+            //    // Define your fake book objects here...
+            //}
 
-            private List<Author> FakeAuthorObjects()
-            {
-                // Define your fake author objects here...
-            }
+            //private List<Author> FakeAuthorObjects()
+            //{
+            //    // Define your fake author objects here...
+            //}
 
-            private List<Publisher> FakePublisherObjects()
-            {
-                // Define your fake publisher objects here...
-            }
+            //private List<Publisher> FakePublisherObjects()
+            //{
+            //    // Define your fake publisher objects here...
+            //}
         }
     }
 }

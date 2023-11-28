@@ -15,11 +15,11 @@ namespace W5G7GZ_HFT_2023241.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // automatikusan generalodik
         public virtual int BookID { get; set; }
 
-        [ForeignKey("Author")]
+        [ForeignKey(nameof(Author))]
         [Required]
         public int AuthorID { get; set; }
 
-        [ForeignKey("Publisher")]
+        [ForeignKey(nameof(Publisher))]
         [Required]
         public int PublisherID { get; set; }
         public int Price { get; set; }
@@ -27,7 +27,7 @@ namespace W5G7GZ_HFT_2023241.Models
         public string Title { get; set; }
         public string Genre { get; set; }
         public string ISBN { get; set; }
-        public DateTime PublicationDate { get; set; }
+        public int PublicationYear { get; set; }
 
         [NotMapped]
         [JsonIgnore]
@@ -37,7 +37,7 @@ namespace W5G7GZ_HFT_2023241.Models
         [JsonIgnore]
         public virtual Publisher Publisher { get; set; }
 
-        public Book(int authorID, int publisherID, int price, string title, string genre, string iSBN, DateTime publicationDate)
+        public Book(int authorID, int publisherID, int price, string title, string genre, string iSBN, int publicationDate)
         {
             AuthorID = authorID;
             PublisherID = publisherID;
@@ -45,9 +45,9 @@ namespace W5G7GZ_HFT_2023241.Models
             Title = title;
             Genre = genre;
             ISBN = iSBN;
-            PublicationDate = publicationDate;
+            PublicationYear = publicationDate;
         }
-        public Book(int bookID, int authorID, int publisherID, int price, string title, string genre, string iSBN, DateTime publicationDate)
+        public Book(int bookID, int authorID, int publisherID, int price, string title, string genre, string iSBN, int publicationDate)
         {
             BookID = bookID;
             AuthorID = authorID;
@@ -56,7 +56,7 @@ namespace W5G7GZ_HFT_2023241.Models
             Title = title;
             Genre = genre;
             ISBN = iSBN;
-            PublicationDate = publicationDate;
+            PublicationYear = publicationDate;
         }
         public Book()
         {
@@ -64,7 +64,7 @@ namespace W5G7GZ_HFT_2023241.Models
 
         public override string ToString()
         {
-            return $"{BookID}\t{Title}\t{Author?.AuthorName}\t{Price}\t{Genre}\t{ISBN}\t{PublicationDate.Year}";
+            return $"{BookID}\t{Title}\t{Author?.AuthorName}\t{Price}\t{Genre}\t{ISBN}\t{PublicationYear}";
         }
     }
 }

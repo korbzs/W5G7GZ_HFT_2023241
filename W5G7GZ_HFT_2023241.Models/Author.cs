@@ -18,18 +18,18 @@ namespace W5G7GZ_HFT_2023241.Models
         [Required]
         [MaxLength(100)]
         public string AuthorName { get; set; }
-        public DateTime BirthDate { get; set; }
+        public int BirthYear { get; set; }
         public string Nationality { get; set; }
 
         [NotMapped]
         [JsonIgnore]
         public virtual ICollection<Book> Books { get; set; }
 
-        public Author(int authorID, string authorName, DateTime birthDate, string nationality)
+        public Author(int authorID, string authorName, int birthYear, string nationality)
         {
             AuthorID = authorID;
             AuthorName = authorName;
-            BirthDate = birthDate;
+            BirthYear = birthYear;
             Nationality = nationality;
         }
         public Author()
@@ -39,7 +39,7 @@ namespace W5G7GZ_HFT_2023241.Models
 
         public override string ToString()
         {
-            return $"{AuthorID}\t{AuthorName}\t{BirthDate.Year}\t{Nationality}";
+            return $"{AuthorID}\t{AuthorName}\t{BirthYear}\t{Nationality}";
         }
     }
 
