@@ -32,6 +32,13 @@ namespace W5G7GZ_HFT_2023241.Models
             BirthYear = birthYear;
             Nationality = nationality;
         }
+        public Author(string authorName, int birthYear, string nationality)
+        {
+            //AuthorID = authorID;
+            AuthorName = authorName;
+            BirthYear = birthYear;
+            Nationality = nationality;
+        }
         public Author()
         {
             this.Books = new HashSet<Book>();

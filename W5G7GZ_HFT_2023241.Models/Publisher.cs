@@ -13,6 +13,7 @@ namespace W5G7GZ_HFT_2023241.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //public int PublisherID { get; set; }
         public virtual int PublisherID { get; set; }
         [MaxLength(100)]
         [Required]
@@ -27,6 +28,13 @@ namespace W5G7GZ_HFT_2023241.Models
         public Publisher(int publisherID, string publisherName, string headquarters, int foundatitonYear)
         {
             PublisherID = publisherID;
+            PublisherName = publisherName;
+            Headquarters = headquarters;
+            FoundatitonYear = foundatitonYear;
+        }
+
+        public Publisher(string publisherName, string headquarters, int foundatitonYear)
+        {
             PublisherName = publisherName;
             Headquarters = headquarters;
             FoundatitonYear = foundatitonYear;

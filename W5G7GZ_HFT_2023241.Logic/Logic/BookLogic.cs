@@ -39,10 +39,12 @@ namespace W5G7GZ_HFT_2023241.Logic.Logic
         public Book Read(int id)
         {
             var book = this.BookRepo.Read(id);
-            if(book == null)
+
+            if (book == null || id < 0)
             {
-                throw new InvalidOperationException("Boook does not exist");
+                throw new InvalidOperationException($"Id is not valid");
             }
+
             return book;
         }
         public void Update(Book item)
@@ -63,8 +65,9 @@ namespace W5G7GZ_HFT_2023241.Logic.Logic
         public IEnumerable<KeyValuePair<string, int>> BookCountPerPublisher()
         {
             var bookCounts = BookRepo.ReadAll()
-        .GroupBy(b => b.Publisher.PublisherName)
-        .Select(group => new KeyValuePair<string, int>(group.Key, group.Count()));
+                .Where(b => b.Publisher != null)
+                .GroupBy(b => b.Publisher.PublisherName)
+                .Select(group => new KeyValuePair<string, int>(group.Key, group.Count()));
 
             return bookCounts;
         }
@@ -107,7 +110,7 @@ namespace W5G7GZ_HFT_2023241.Logic.Logic
 
             return genresForAuthors;
         }
-
+        //non-crud end
         private int AuthorIDForBook(Book book)
         {
             if (book.Author != null)
