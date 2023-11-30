@@ -11,9 +11,9 @@ namespace W5G7GZ_HFT_2023241.Logic.Interfaces
     {
         //crud
         void Create(Publisher item);
-        void Update(Publisher item);
         Publisher Read(int id);
         IQueryable<Publisher> ReadAll();
+        void Update(Publisher item);
         void Delete(int id);
     }
 }

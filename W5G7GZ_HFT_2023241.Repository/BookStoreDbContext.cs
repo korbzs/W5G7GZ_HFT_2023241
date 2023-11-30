@@ -30,8 +30,8 @@ namespace W5G7GZ_HFT_2023241.Repository
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Book>()
-        .HasKey(b => b.BookID);
+            //modelBuilder.Entity<Book>()
+            //.HasKey(b => b.BookID);
 
             modelBuilder.Entity<Book>()
          .HasOne(b => b.Author)
@@ -45,17 +45,18 @@ namespace W5G7GZ_HFT_2023241.Repository
          .HasForeignKey(b => b.PublisherID)
          .OnDelete(DeleteBehavior.SetNull);
 
-        modelBuilder.Entity<Book>()
-                    .Property(b => b.BookID)
-                    .ValueGeneratedOnAdd(); // start 1, incr 1
+        //modelBuilder.Entity<Book>()
+        //            .Property(b => b.BookID)
+        //            .ValueGeneratedOnAdd(); // start 1, incr 1
 
-        modelBuilder.Entity<Author>()
-                    .Property(a => a.AuthorID)
-                    .ValueGeneratedOnAdd(); // start 1, incr 1
+        //modelBuilder.Entity<Author>()
+        //            .Property(a => a.AuthorID)
+        //            .ValueGeneratedOnAdd();
+        //             // start 1, incr 1
 
-        modelBuilder.Entity<Publisher>()
-                    .Property(p => p.PublisherID)
-                     .ValueGeneratedOnAdd(); // start 1, incr 1
+        //modelBuilder.Entity<Publisher>()
+        //            .Property(p => p.PublisherID)
+        //             .ValueGeneratedOnAdd(); // start 1, incr 1
 
             //publisher with ID
             //Publisher libri = new Publisher(1, "Libri", "Budapest", 2011);
@@ -102,8 +103,6 @@ namespace W5G7GZ_HFT_2023241.Repository
                 new Author { AuthorID = 5, AuthorName = "Edith Eva Eger", BirthYear = 1927, Nationality = "Hungarian" },
                 new Author { AuthorID = 6, AuthorName = "Alpár Aladár", BirthYear = 2001, Nationality = "Hungarian" }
                 );
-
-
 
 
             //book with id in ctor

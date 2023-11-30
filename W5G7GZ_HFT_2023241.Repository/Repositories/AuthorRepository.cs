@@ -16,37 +16,43 @@ namespace W5G7GZ_HFT_2023241.Repository.Repositories
         {
             this.ctx = ctx;
         }
-        public void Add(Author author)
+        public void Create(Author author)
         {
             ctx.Add(author);
             ctx.SaveChanges();
         }
+        public Author Read(int ID)
+        {
+            return ctx.Set<Author>().FirstOrDefault(x => x.AuthorID == ID);
+        }
 
         public void Update(Author author)
         {
-            var old = GetOne(author.AuthorID);
+            var old = Read(author.AuthorID);
             foreach (var prop in old.GetType().GetProperties())
             {
-                prop.SetValue(old, prop.GetValue(author));
+                if(prop.GetAccessors().FirstOrDefault(t => t.IsVirtual) == null)
+                {
+                    prop.SetValue(old, prop.GetValue(author));
+                }
             }
             ctx.SaveChanges();
         }
 
-        public Author GetOne(int ID)
-        {
-            return GetAll().FirstOrDefault(x => x.AuthorID == ID);
-        }
         public IQueryable<Author> GetAll()
         {
             return ctx.Authors;
         }
         public void Delete(int ID)
         {
-            var todelete = GetOne(ID);
+            var todelete = Read(ID);
             ctx.Remove(todelete);
             ctx.SaveChanges();
         }
 
-
+        public IQueryable<Author> ReadAll()
+        {
+            return ctx.Set<Author>();
+        }
     }
 }

@@ -17,7 +17,7 @@ namespace W5G7GZ_HFT_2023241.Repository.Repositories
             this.ctx = ctx;
         }
 
-        public void Add(Publisher publisher)
+        public void Create(Publisher publisher)
         {
             ctx.Add(publisher);
             ctx.SaveChanges();
@@ -25,25 +25,28 @@ namespace W5G7GZ_HFT_2023241.Repository.Repositories
 
         public void Update(Publisher publisher)
         {
-            var old = GetOne(publisher.PublisherID);
+            var old = Read(publisher.PublisherID);
             foreach (var prop in old.GetType().GetProperties())
             {
-                prop.SetValue(old, prop.GetValue(publisher));
+                if (prop.GetAccessors().FirstOrDefault(t => t.IsVirtual) == null)
+                {
+                    prop.SetValue(old, prop.GetValue(publisher));
+                }
             }
             ctx.SaveChanges();
         }
-        public Publisher GetOne(int ID)
+        public Publisher Read(int ID)
         {
-            return GetAll().FirstOrDefault(x => x.PublisherID == ID);
+            return ctx.Set<Publisher>().FirstOrDefault(x => x.PublisherID == ID);
         }
-        public IQueryable<Publisher> GetAll()
+        public IQueryable<Publisher> ReadAll()
         {
             return ctx.Publishers;
         }
 
         public void Delete(int ID)
         {
-            var todelete = GetOne(ID);
+            var todelete = Read(ID);
             ctx.Remove(todelete);
             ctx.SaveChanges();
         }

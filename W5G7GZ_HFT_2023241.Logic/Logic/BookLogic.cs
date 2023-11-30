@@ -7,20 +7,19 @@ using System.Threading.Tasks;
 using W5G7GZ_HFT_2023241.Logic.Interfaces;
 using W5G7GZ_HFT_2023241.Models;
 using W5G7GZ_HFT_2023241.Repository;
+using W5G7GZ_HFT_2023241.Repository.RepositoryInterfaces;
 
 namespace W5G7GZ_HFT_2023241.Logic.Logic
 {
     public class BookLogic : IBookLogic
     {
-        IRepository<Author> AuthorRepo;
-        IRepository<Book> BookRepo;
-        IRepository<Publisher> PublisherRepo;
+        IAuthorRepository AuthorRepo;
+        IBookRepository BookRepo;
 
-        public BookLogic(IRepository<Book> BookRepo, IRepository<Author> AuthorRepo, IRepository<Publisher> PublisherRepo)
+        public BookLogic(IBookRepository BookRepo, IAuthorRepository AuthorRepo)
         {
             this.AuthorRepo = AuthorRepo;
             this.BookRepo = BookRepo;
-            this.PublisherRepo = PublisherRepo;
         }
 
         //crud

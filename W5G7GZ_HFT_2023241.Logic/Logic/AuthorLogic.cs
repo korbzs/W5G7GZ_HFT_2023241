@@ -14,9 +14,9 @@ namespace W5G7GZ_HFT_2023241.Logic.Logic
 {
     public class AuthorLogic : IAuthorLogic
     {
-        IRepository<Author> repo;
+        IAuthorRepository repo;
 
-        public AuthorLogic(IRepository<Author> repo)
+        public AuthorLogic(IAuthorRepository repo)
         {
             this.repo = repo;
         }

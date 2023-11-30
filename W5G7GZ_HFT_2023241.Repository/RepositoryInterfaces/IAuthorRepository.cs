@@ -10,10 +10,10 @@ namespace W5G7GZ_HFT_2023241.Repository.RepositoryInterfaces
 {
     public interface IAuthorRepository
     {
-        void Add(Author author);
+        void Create(Author author);
+        Author Read(int ID);
+        IQueryable<Author> ReadAll();
         public void Update(Author author);
-        Author GetOne(int ID);
-        IQueryable<Author> GetAll();
         void Delete(int ID);
     }
 }

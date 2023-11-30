@@ -12,9 +12,9 @@ namespace W5G7GZ_HFT_2023241.Logic.Interfaces
     {
         //crud
         void Create(Author item);
-        void Update(Author item);
         Author Read(int id);
         IQueryable<Author> ReadAll();
+        void Update(Author item);
         void Delete(int id);
     }
 }

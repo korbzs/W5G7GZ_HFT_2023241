@@ -11,9 +11,9 @@ namespace W5G7GZ_HFT_2023241.Logic.Interfaces
     {
         //crud
         void Create(Book item);
-        void Update(Book item);
         Book Read(int id);
         IQueryable<Book> ReadAll();
+        void Update(Book item);
         void Delete(int id);
 
         //non-crud

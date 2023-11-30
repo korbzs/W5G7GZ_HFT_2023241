@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using W5G7GZ_HFT_2023241.Logic.Interfaces;
 using W5G7GZ_HFT_2023241.Models;
 using W5G7GZ_HFT_2023241.Repository;
+using W5G7GZ_HFT_2023241.Repository.RepositoryInterfaces;
 
 namespace W5G7GZ_HFT_2023241.Logic.Logic
 {
@@ -13,9 +14,9 @@ namespace W5G7GZ_HFT_2023241.Logic.Logic
     {
 
 
-        IRepository<Publisher> repo;
+        IPublisherRepository repo;
 
-        public PublisherLogic(IRepository<Publisher> repo)
+        public PublisherLogic(IPublisherRepository repo)
         {
             this.repo = repo;
         }

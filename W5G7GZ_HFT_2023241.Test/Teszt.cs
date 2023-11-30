@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Moq;
+using W5G7GZ_HFT_2023241.Repository.RepositoryInterfaces;
 
 namespace W5G7GZ_HFT_2023241.Test
 {
@@ -22,43 +23,53 @@ namespace W5G7GZ_HFT_2023241.Test
             [SetUp]
             public void Setup()
             {
-                Mock<IRepository<Author>> mockedAuthorRepo = new Mock<IRepository<Author>>();
-                Mock<IRepository<Book>> mockedBookRepo = new Mock<IRepository<Book>>();
-                Mock<IRepository<Publisher>> mockedPublisherRepo = new Mock<IRepository<Publisher>>();
+                Mock<IAuthorRepository> mockedAuthorRepo = new Mock<IAuthorRepository>();
+                Mock<IBookRepository> mockedBookRepo = new Mock<IBookRepository>();
+                Mock<IPublisherRepository> mockedPublisherRepo = new Mock<IPublisherRepository>();
 
-                mockedAuthorRepo.Setup(x => x.Read(It.IsAny<int>())).Returns(
-                    new Author()
-                    {
-                        AuthorID = 12,
-                        AuthorName = "Mikszáth Kálmán",
-                        BirthYear = 1847,
-                        Nationality = "Hungarian"
+                //mockedAuthorRepo.Setup(x => x.Read(It.IsAny<int>())).Returns(
+                //    new Author()
+                //    {
+                //        AuthorID = 12,
+                //        AuthorName = "Mikszáth Kálmán",
+                //        BirthYear = 1847,
+                //        Nationality = "Hungarian",
 
-                    });
+                //        Books = new Book[]
+                //        {
+                //            new Book() { BookID = 1, AuthorID = 1, PublisherID = 1, Price = 5000, Title = "A jó palócok", Genre = "Novel", ISBN = "9789631440534", PublicationYear = 1882 },
+                //            new Book() { BookID = 2, AuthorID = 1, PublisherID = 2, Price = 5500, Title = "Tót atyafiak", Genre = "Novel/Realism", ISBN = "9439631440534", PublicationYear = 1881 },
+                //            new Book() { BookID = 3, AuthorID = 1, PublisherID = 1, Price = 3500, Title = "Szent Péter esernyője", Genre = "Novel", ISBN = "9789631440534", PublicationYear = 1882 },
+                //        }
+                //    });
 
-                mockedBookRepo.Setup(x => x.Read(It.IsAny<int>())).Returns(
-                    new Book()
-                    {
-                        BookID = 12,
-                        AuthorID = 12,
-                        Title = "Szent Péter esernyője",
-                        Genre = "fiction",
-                        PublicationYear = 1895
-                    });
+                //mockedBookRepo.Setup(x => x.Read(It.IsAny<int>())).Returns( //It.IsAny<int>()
+                //    new Book() // booklist ->sok book
+                //    {
+                //        BookID = 12,
+                //        AuthorID = 12,
+                //        Title = "Szent Péter esernyője",
+                //        Genre = "fiction",
+                //        PublicationYear = 1895,
 
-                mockedPublisherRepo.Setup(x => x.Read(It.IsAny<int>())).Returns(
-                    new Publisher()
-                    {
-                        PublisherID = 100,
-                        PublisherName = "Corvinus"
-                    });
+                //        Publisher = new Publisher(100, "AKiadó", "Budapest", 2000),
+                //        Author = new Author(12, "Mikszáth Kálmán", 1847, "Hungarian")
+
+                //    });
+
+                //mockedPublisherRepo.Setup(x => x.Read(It.IsAny<int>())).Returns(
+                //    new Publisher()
+                //    {
+                //        PublisherID = 100,
+                //        PublisherName = "Corvinus"
+                //    });
 
 
                 mockedAuthorRepo.Setup(x => x.ReadAll()).Returns(this.FakeAuthorObjects);
                 mockedBookRepo.Setup(x => x.ReadAll()).Returns(this.FakeBookObjects);
                 mockedPublisherRepo.Setup(x => x.ReadAll()).Returns(this.FakePublisherObjects);
 
-                this.bookLogic = new BookLogic(mockedBookRepo.Object, mockedAuthorRepo.Object, mockedPublisherRepo.Object);
+                this.bookLogic = new BookLogic(mockedBookRepo.Object, mockedAuthorRepo.Object);
             }
 
             [Test]
@@ -85,8 +96,8 @@ namespace W5G7GZ_HFT_2023241.Test
             [Test]
             public void ReadValidIdShouldReturnBook()
             {
-                var book = this.bookLogic.Read(12);
-                Assert.That(book.Title, Is.EqualTo("Szent Péter esernyője"));
+                var book = this.bookLogic.Read(1); // 4:Abigél || 12:Szent Péter esernyője
+                Assert.That(book.Title, Is.EqualTo("Embers"));
             }
 
             [Test]
@@ -101,19 +112,15 @@ namespace W5G7GZ_HFT_2023241.Test
             {
                 var result = this.bookLogic.BookCountPerPublisher();
 
-                Assert.That(result, Is.Not.Null, "Result should not be null");
-                Assert.That(result, Is.Not.Empty, "Result should not be empty");
-
-                // Check if the result contains the expected counts
                 Assert.That(result, Is.EquivalentTo(
                     new[]
                 {
                 new KeyValuePair<string, int>("Luther Kiadó", 1),
                 new KeyValuePair<string, int>("Kalligram", 1),
-                new KeyValuePair<string, int>("Helikon", 1),
+                new KeyValuePair<string, int>("Helikon", 2),
             }));
             }
-            
+
 
             private IQueryable<Author> FakeAuthorObjects()
             {
@@ -145,18 +152,18 @@ namespace W5G7GZ_HFT_2023241.Test
                 Publisher publisher3 = new Publisher() { PublisherID = 3, PublisherName = "Helikon", Headquarters = "Budapest", FoundatitonYear = 1949 };
                 //Publisher publisher4 = new Publisher() { PublisherID = 3, PublisherName = "Nevesincs Kiadó", Headquarters = "Budapest", FoundatitonYear = 2023 };
 
-                Book book1 = new Book() { BookID = 1, AuthorID = author1.AuthorID, PublisherID = publisher1.PublisherID, Price = 5000, Title = "Embers", Genre = "Novel", ISBN = "9789631440504", PublicationYear = 1942 };
-                Book book2 = new Book() { BookID = 2, AuthorID = author2.AuthorID, PublisherID = publisher2.PublisherID, Price = 4500, Title = "Az ajtó", Genre = "Novel", ISBN = "9780062314404", PublicationYear = 1987 };
-                Book book3 = new Book() { BookID = 3, AuthorID = author3.AuthorID, PublisherID = publisher3.PublisherID, Price = 5500, Title = "Celestial Harmonies", Genre = "Novel", ISBN = "9781400078748", PublicationYear = 2000 };
-                Book book4 = new Book() { BookID = 4, AuthorID = author2.AuthorID, PublisherID = publisher3.PublisherID, Price = 5500, Title = "Abigél", Genre = "Historic novel", ISBN = "9789634158493", PublicationYear = 1970 };
-
+                Book book1 = new Book() { BookID = 1, AuthorID = author1.AuthorID, PublisherID = publisher1.PublisherID, Price = 5000, Title = "Embers", Genre = "Novel", ISBN = "9789631440504", PublicationYear = 1942, Author = author1, Publisher = publisher1 };
+                Book book2 = new Book() { BookID = 2, AuthorID = author2.AuthorID, PublisherID = publisher2.PublisherID, Price = 4500, Title = "Az ajtó", Genre = "Novel", ISBN = "9780062314404", PublicationYear = 1987, Author = author2, Publisher = publisher2 };
+                Book book3 = new Book() { BookID = 3, AuthorID = author3.AuthorID, PublisherID = publisher3.PublisherID, Price = 5500, Title = "Celestial Harmonies", Genre = "Novel", ISBN = "9781400078748", PublicationYear = 2000, Author = author3, Publisher = publisher3 };
+                Book book4 = new Book() { BookID = 4, AuthorID = author2.AuthorID, PublisherID = publisher3.PublisherID, Price = 5500, Title = "Abigél", Genre = "Historic novel", ISBN = "9789634158493", PublicationYear = 1970, Author = author2, Publisher = publisher3 };
 
 
                 List<Book> books = new List<Book>
                 {
                     book1,
                     book2,
-                    book3
+                    book3,
+                    book4
                 };
 
                 return books.AsQueryable();
