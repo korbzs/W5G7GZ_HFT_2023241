@@ -18,7 +18,9 @@ namespace W5G7GZ_HFT_2023241.Test
         [TestFixture]
         public class BookLogicTests
         {
+            private AuthorLogic authorLogic { get; set; }
             private BookLogic bookLogic { get; set; }
+            private PublisherLogic publisherLogic { get; set; }
 
             [SetUp]
             public void Setup()
@@ -26,7 +28,7 @@ namespace W5G7GZ_HFT_2023241.Test
                 Mock<IAuthorRepository> mockedAuthorRepo = new Mock<IAuthorRepository>();
                 Mock<IBookRepository> mockedBookRepo = new Mock<IBookRepository>();
                 Mock<IPublisherRepository> mockedPublisherRepo = new Mock<IPublisherRepository>();
-
+                #region asd
                 //mockedAuthorRepo.Setup(x => x.Read(It.IsAny<int>())).Returns(
                 //    new Author()
                 //    {
@@ -63,13 +65,16 @@ namespace W5G7GZ_HFT_2023241.Test
                 //        PublisherID = 100,
                 //        PublisherName = "Corvinus"
                 //    });
-
+                #endregion
 
                 mockedAuthorRepo.Setup(x => x.ReadAll()).Returns(this.FakeAuthorObjects);
                 mockedBookRepo.Setup(x => x.ReadAll()).Returns(this.FakeBookObjects);
                 mockedPublisherRepo.Setup(x => x.ReadAll()).Returns(this.FakePublisherObjects);
 
                 this.bookLogic = new BookLogic(mockedBookRepo.Object, mockedAuthorRepo.Object);
+                this.authorLogic = new AuthorLogic(mockedAuthorRepo.Object);
+                this.publisherLogic = new PublisherLogic(mockedPublisherRepo.Object);
+
             }
 
             [Test]
