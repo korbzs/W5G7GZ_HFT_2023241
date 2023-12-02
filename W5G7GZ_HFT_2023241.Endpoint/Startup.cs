@@ -51,8 +51,8 @@ namespace W5G7GZ_HFT_2023241.Endpoint
                 app.UseDeveloperExceptionPage();
 
 
-                //app.UseSwagger();
-                //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "W5G7GZ_HFT_2023241.Endpoint v1"));
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "W5G7GZ_HFT_2023241.Endpoint v1"));
             }
 
             app.UseExceptionHandler(c => c.Run(async context =>
