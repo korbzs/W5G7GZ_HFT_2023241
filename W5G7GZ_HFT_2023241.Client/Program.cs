@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Intrinsics.X86;
 using W5G7GZ_HFT_2023241.Logic.Logic;
 using W5G7GZ_HFT_2023241.Models;
 using W5G7GZ_HFT_2023241.Repository;
@@ -195,9 +196,55 @@ namespace W5G7GZ_HFT_2023241.Client
             }
         }
 
+        static void NonCrud(string entity)
+        {
+            //IEnumerable<KeyValuePair<string, int>> BookCountPerPublisher();
+            //IEnumerable<string> AuthorsWithMultipleBooks();
+            //KeyValuePair<string, int> AuthorWithTheMostBooks();
+            //int PriceOfAllBooks();
+            //IEnumerable<GenresForAuthorsClass> GenresForAuthors();
+
+            if (entity == "BookCountPerPublisher")
+            {
+                IEnumerable<KeyValuePair<string, int>> BCPP = rest.GetSingle<IEnumerable<KeyValuePair<string, int>>>("/api/NonCrudField/BookCountPerPublisher");
+                Console.WriteLine(BCPP);
+                Console.ReadLine();
+            }
+            if (entity == "AuthorsWithMultipleBooks")
+            {
+                IEnumerable<string> AWMB = rest.GetSingle<IEnumerable<string>>("/api/NonCrudSeason/AuthorsWithMultipleBooks");
+                Console.WriteLine(AWMB);
+                Console.ReadLine();
+            }
+            if (entity == "AuthorWithTheMostBooks")
+            {
+                KeyValuePair<string, int> AWTMB = rest.GetSingle<KeyValuePair<string, int>>("/api/NonCrudSeason/AuthorWithTheMostBooks");
+                
+                Console.WriteLine($"{AWTMB.Key} has the most books: {AWTMB.Value} books");
+                Console.ReadLine();
+            }
+            if (entity == "PriceOfAllBooks")
+            {
+                int sum = rest.GetSingle<int>("/api/NonCrudSeason/PriceOfAllBooks");
+                Console.WriteLine($"Price of all books combined: {sum}");
+                Console.ReadLine();
+            }
+            if (entity == "GenresForAuthors")
+            {
+                IEnumerable<GenresForAuthorsClass> GFAC = rest.GetSingle<IEnumerable<GenresForAuthorsClass>>("/api/NonCrudSeason/GenresForAuthors");
+                foreach (var item in GFAC)
+                {
+                    Console.WriteLine($"{item.AuthorName}: {String.Join(", ", item.Genres)}");
+                }
+                Console.ReadLine();
+            }
+        }
+
         static void Main(string[] args)
         {
             rest = new RestService("http://localhost:50638/", "bookstore");
+            //rest = new RestService("http://localhost:5057/");
+
             var AuthorSubMenu = new ConsoleMenu(args, level: 1)
                 .Add("List", () => List("Author"))
                 .Add("Create", () => Create("Author"))
@@ -219,17 +266,24 @@ namespace W5G7GZ_HFT_2023241.Client
                 .Add("Update", () => Update("Book"))
                 .Add("Exit", ConsoleMenu.Close);
 
-            //var nonCrudSubMenu = new ConsoleMenu(args, level: 1)
+
+            var nonCrudSubMenu = new ConsoleMenu(args, level: 1)
+                .Add("Book Count Per Publisher", () => NonCrud("BookCountPerPublisher"))
+                .Add("Authors With Multiple Books", () => NonCrud("AuthorsWithMultipleBooks"))
+                .Add("Author With The Most Books", () => NonCrud("AuthorWithTheMostBooks"))
+                .Add("Price Of All Books", () => NonCrud("PriceOfAllBooks"))
+                .Add("Genres For Authors", () => NonCrud("GenresForAuthors"))
+                .Add("Exit", ConsoleMenu.Close);
 
 
             var menu = new ConsoleMenu(args, level: 0)
                  .Add("Authors", () => AuthorSubMenu.Show())
                  .Add("Publishers", () => PublisherSubMenu.Show())
                  .Add("Books", () => BookSubMenu.Show())
-                 //.Add("Non CRUD", () => nonCrudSubMenu.Show())
+                 .Add("Non CRUD", () => nonCrudSubMenu.Show())
                  .Add("Exit", ConsoleMenu.Close);
 
-
+            Console.WriteLine("asd");
             menu.Show();
         }
     }

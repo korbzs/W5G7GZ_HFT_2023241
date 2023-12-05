@@ -32,12 +32,6 @@ namespace W5G7GZ_HFT_2023241.Test
             public void Setup()
             {
 
-                //I don't use that just in case
-                #region SetupOfRead
-                
-
-                #endregion 
-
                 #region authorList
                 Author author1 = new Author() { AuthorID = 1, AuthorName = "Márai Sándor", BirthYear = 1900, Nationality = "Hungarian" };
                 Author author2 = new Author() { AuthorID = 2, AuthorName = "Szabó Magda", BirthYear = 1917, Nationality = "Hungarian" };

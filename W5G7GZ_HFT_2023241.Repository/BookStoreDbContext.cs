@@ -4,7 +4,7 @@ using W5G7GZ_HFT_2023241.Models;
 
 namespace W5G7GZ_HFT_2023241.Repository
 {
-    public class BookStoreDbContext : DbContext // used Microsoft.EntityFrameworkCore 5.0.11
+    public class BookStoreDbContext : DbContext // used Microsoft.EntityFrameworkCore 5.0.17
     {
         public virtual DbSet<Author> Authors { get; set; }
         public virtual DbSet<Book> Books { get; set; }
