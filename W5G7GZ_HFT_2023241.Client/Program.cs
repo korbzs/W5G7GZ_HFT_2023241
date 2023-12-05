@@ -229,6 +229,7 @@ namespace W5G7GZ_HFT_2023241.Client
                  //.Add("Non CRUD", () => nonCrudSubMenu.Show())
                  .Add("Exit", ConsoleMenu.Close);
 
+
             menu.Show();
         }
     }
