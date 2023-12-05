@@ -98,14 +98,14 @@ namespace W5G7GZ_HFT_2023241.Logic.Logic
 
             return authorsWithMultipleBooks;
         }
-        public IEnumerable<dynamic> GenresForAuthors()
+        public IEnumerable<GenresForAuthorsClass> GenresForAuthors()
         {
 
             var genresForAuthors = from author in AuthorRepo.ReadAll()
                                    join book in BookRepo.ReadAll() on author.AuthorID equals AuthorIDForBook(book)
                                    where book != null
                                    group book.Genre by author.AuthorName into genreGroup
-                                   select new { AuthorName = genreGroup.Key, Genres = genreGroup.ToList() };
+                                   select new GenresForAuthorsClass { AuthorName = genreGroup.Key, Genres = genreGroup.ToList() };
 
             return genresForAuthors;
         }
