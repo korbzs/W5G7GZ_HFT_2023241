@@ -62,6 +62,8 @@ namespace W5G7GZ_HFT_2023241.Models
         {
         }
 
+
+
         public override string ToString()
         {
             return $"{BookID}\t{Title}\t{Author?.AuthorName}\t{Price}\t{Genre}\t{ISBN}\t{PublicationYear}";

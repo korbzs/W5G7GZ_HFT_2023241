@@ -10,36 +10,46 @@ namespace W5G7GZ_HFT_2023241.Endpoint.Controllers
     [ApiController]
     public class PublisherController : ControllerBase
     {
-        // GET: api/<PublisherController>
+        IPublisherLogic logic;
+
+        public PublisherController(IPublisherLogic logic)
+        {
+            this.logic = logic;
+        }
+
+        // GET: api/<SeasonController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Publisher> ReadAll()
         {
-            return new string[] { "value1", "value2" };
+            return this.logic.ReadAll();
         }
 
-        // GET api/<PublisherController>/5
+        // GET api/<SeasonController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Publisher Read(int id)
         {
-            return "value";
+            return logic.Read(id);
         }
 
-        // POST api/<PublisherController>
+        // POST api/<SeasonController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Create([FromBody] Publisher value)
         {
+            this.logic.Create(value);
         }
 
-        // PUT api/<PublisherController>/5
+        // PUT api/<SeasonController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Update([FromBody] Publisher value)
         {
+            this.logic.Update(value);
         }
 
-        // DELETE api/<PublisherController>/5
+        // DELETE api/<SeasonController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            this.logic.Delete(id);
         }
     }
 }

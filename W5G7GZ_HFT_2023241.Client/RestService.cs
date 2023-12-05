@@ -29,6 +29,7 @@ namespace W5G7GZ_HFT_2023241.Client
                 WebClient wc = new WebClient();
                 wc.DownloadData(url);
                 return true;
+
             }
             catch
             {
