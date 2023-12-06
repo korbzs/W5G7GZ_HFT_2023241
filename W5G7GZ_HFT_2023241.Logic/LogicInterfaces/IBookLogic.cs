@@ -22,6 +22,7 @@ namespace W5G7GZ_HFT_2023241.Logic.Interfaces
         //non-crud
 
         IEnumerable<KeyValuePair<string, int>> BookCountPerPublisher();
+
         IEnumerable<string> AuthorsWithMultipleBooks();
         KeyValuePair<string, int> AuthorWithTheMostBooks();
         int PriceOfAllBooks();
