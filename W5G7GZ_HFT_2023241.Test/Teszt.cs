@@ -136,16 +136,13 @@ namespace W5G7GZ_HFT_2023241.Test
             public void ReadValidIdShouldReturnBook()
             {
 
-                //ARRANGE 
                 var author1 = new Author() { AuthorID = 1, AuthorName = "Márai Sándor", BirthYear = 1900, Nationality = "Hungarian" };
                 var publisher1 = new Publisher() { PublisherID = 1, PublisherName = "Luther Kiadó", Headquarters = "Budapest", FoundatitonYear = 1945 };
 
                 var expectedResult = new Book() { BookID = 1, AuthorID = 1, PublisherID = 1, Price = 5000, Title = "Embers", Genre = "Novel", ISBN = "9789631440504", PublicationYear = 1942, Author = author1, Publisher = publisher1 };
 
-                //ACT
                 var book = bookLogic.Read(1);
                 
-                //ASSERT
                 Assert.That(book.Title, Is.EqualTo(expectedResult.Title));
 
             }
@@ -208,26 +205,20 @@ namespace W5G7GZ_HFT_2023241.Test
             [Test]
             public void AuthorsBornInDecade_Test()
             {
-                // ARRANGE
                 int startYear = 1910;
 
-                // ACT
                 var authors = bookLogic.AuthorsBornInDecade(startYear);
 
-                // ASSERT
                 Assert.That(authors.Count, Is.EqualTo(2));
             }
 
             [Test]
             public void BooksByGenre_Test()
             {
-                // ARRANGE
                 string genre = "Novel";
 
-                // ACT
                 var books = bookLogic.BooksByGenre(genre);
 
-                // ASSERT
                 Assert.That(books.Count, Is.EqualTo(3));
             }
 

@@ -12,7 +12,7 @@ namespace W5G7GZ_HFT_2023241.Models
     public class Book
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // automatikusan generalodik
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public virtual int BookID { get; set; }
 
         [ForeignKey(nameof(Author))]
@@ -66,7 +66,7 @@ namespace W5G7GZ_HFT_2023241.Models
 
         public override string ToString()
         {
-            return $"Book id: {BookID}\t{Title}\t{Author?.AuthorName}\tPrice: {Price}\tGenre: {Genre}\t{ISBN}\tDate: {PublicationYear}";
+            return $"Book ID: {BookID}\tTitle: {Title}\t{Author?.AuthorName}\tPrice: {Price}\tGenre: {Genre}\t{ISBN}\tDate: {PublicationYear}";
         }
     }
 }

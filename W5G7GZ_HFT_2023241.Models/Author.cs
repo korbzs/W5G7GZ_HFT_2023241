@@ -13,7 +13,6 @@ namespace W5G7GZ_HFT_2023241.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        //public int AuthorID { get; set; }
         public virtual int AuthorID { get; set; }
         [Required]
         [MaxLength(100)]
@@ -45,7 +44,7 @@ namespace W5G7GZ_HFT_2023241.Models
 
         public override string ToString()
         {
-            return $"{AuthorID}\t{AuthorName}\t{BirthYear}\t{Nationality}";
+            return $"Author ID: {AuthorID}\tName: {AuthorName}\tBirthYear: {BirthYear}\tNationality: {Nationality}";
         }
     }
 

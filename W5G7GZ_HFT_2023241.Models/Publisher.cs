@@ -13,7 +13,6 @@ namespace W5G7GZ_HFT_2023241.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        //public int PublisherID { get; set; }
         public virtual int PublisherID { get; set; }
         [MaxLength(100)]
         [Required]
@@ -46,7 +45,7 @@ namespace W5G7GZ_HFT_2023241.Models
         }
         public override string ToString()
         {
-            return $"{PublisherID}\t{PublisherName}\t{Headquarters}\t{FoundatitonYear}";
+            return $"Publisher ID: {PublisherID}\tName: {PublisherName}\tHeadquarters: {Headquarters}\tFoundation Year: {FoundatitonYear}";
         }
     }
 }

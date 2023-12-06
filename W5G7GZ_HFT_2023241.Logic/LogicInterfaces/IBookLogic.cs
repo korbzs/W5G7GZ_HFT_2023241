@@ -21,12 +21,13 @@ namespace W5G7GZ_HFT_2023241.Logic.Interfaces
 
         //non-crud
 
-        IEnumerable<KeyValuePair<string, int>> BookCountPerPublisher();
+        IEnumerable<KeyValuePair<string, int>> BookCountPerPublisher(); // returns each publisher and the amount of books that they have
 
-        IEnumerable<string> AuthorsWithMultipleBooks();
-        KeyValuePair<string, int> AuthorWithTheMostBooks();
-        int PriceOfAllBooks();
-        public List<Book> BooksByGenre(string genre);
-        public List<Author> AuthorsBornInDecade(int startYear);
+        IEnumerable<string> AuthorsWithMultipleBooks(); // returns authors who have more than 1 books
+        KeyValuePair<string, int> AuthorWithTheMostBooks(); // returns the author with the most books
+        int PriceOfAllBooks(); // returns the price of all books combined
+        public List<Book> BooksByGenre(string genre); // returns books that is equals to the genre
+        public List<Author> AuthorsBornInDecade(int startYear); // it returns authors who born in the interval of [starYear, startYear + 10]
+                                                                // so if startYear = 1900, it will return every author that born from 1900 to 1910
     }
 }

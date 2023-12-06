@@ -140,7 +140,7 @@ namespace W5G7GZ_HFT_2023241.Client
 
                 rest.Put(one, "/api/Publisher/" + id);
             }
-            else if (entity == "Book") //
+            else if (entity == "Book") 
             {
                 Console.Write("Enter Book's id to update: ");
                 int id = int.Parse(Console.ReadLine());
@@ -227,7 +227,7 @@ namespace W5G7GZ_HFT_2023241.Client
             }
             if (entity == "BooksByGenre") 
             {
-                Console.WriteLine("Please enter genre (try: Dystopic Fiction): ");
+                Console.WriteLine("Please enter genre (try: Novel): ");
                 string genre = Console.ReadLine();
                 List<Book> BBG = rest.GetSingle<List<Book>>("/api/NonCrudField/BooksByGenre?genre=" + genre);
                 foreach (var item in BBG)
