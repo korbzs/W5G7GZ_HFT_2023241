@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using W5G7GZ_HFT_2023241.Logic.Interfaces;
 using W5G7GZ_HFT_2023241.Models;
 using W5G7GZ_HFT_2023241.Repository;
+using W5G7GZ_HFT_2023241.Repository.Repositories;
 using W5G7GZ_HFT_2023241.Repository.RepositoryInterfaces;
 
 namespace W5G7GZ_HFT_2023241.Logic.Logic
@@ -29,7 +31,7 @@ namespace W5G7GZ_HFT_2023241.Logic.Logic
             {
                 throw new ArgumentException("Book name is too short...");
             }
-            if(item.Price < 0)
+            if (item.Price < 0)
             {
                 throw new ArgumentException("Book price can't be negative");
             }
@@ -78,6 +80,11 @@ namespace W5G7GZ_HFT_2023241.Logic.Logic
                 .Select(group => new KeyValuePair<string, int>(group.Key, group.Count()))
                 .OrderByDescending(pair => pair.Value)
                 .FirstOrDefault();
+            var result = (from x in BookRepo.ReadAll()
+                          group x by x.Author.AuthorName into grouped
+                          orderby grouped.Count()
+                          select new KeyValuePair<string, int>(grouped.Key, grouped.Count())).Take(1);
+
 
             return authorWithMostBooks;
         }
@@ -85,9 +92,15 @@ namespace W5G7GZ_HFT_2023241.Logic.Logic
         public int PriceOfAllBooks()
         {
             var Prices = from x in BookRepo.ReadAll()
-                        group x by x.BookID into g
-                        select g.Sum(x => x.Price);
+                         group x by x.BookID into g
+                         select g.Sum(x => x.Price);
             return Prices.Sum();
+        }
+
+        public List<Author> AuthorsBornInDecade(int startYear)
+        {
+            var authors = AuthorRepo.ReadAll().Where(a => a.BirthYear >= startYear && a.BirthYear <= startYear + 10).ToList();
+            return authors;
         }
         public IEnumerable<string> AuthorsWithMultipleBooks()
         {
@@ -98,28 +111,11 @@ namespace W5G7GZ_HFT_2023241.Logic.Logic
 
             return authorsWithMultipleBooks;
         }
-        public IEnumerable<GenresForAuthorsClass> GenresForAuthors()
-        {
 
-            var genresForAuthors = from author in AuthorRepo.ReadAll()
-                                   join book in BookRepo.ReadAll() on author.AuthorID equals AuthorIDForBook(book)
-                                   where book != null
-                                   group book.Genre by author.AuthorName into genreGroup
-                                   select new GenresForAuthorsClass { AuthorName = genreGroup.Key, Genres = genreGroup.ToList() };
-
-            return genresForAuthors;
-        }
-        //non-crud end
-        private int AuthorIDForBook(Book book)
+        public List<Book> BooksByGenre(string genre)
         {
-            if (book.Author != null)
-            {
-                return book.Author.AuthorID;
-            }
-            else
-            {
-                return -1; // ID can't be negative
-            }
+            var books = BookRepo.ReadAll().Where(b => b.Genre == genre).ToList();
+            return books;
         }
     }
 }

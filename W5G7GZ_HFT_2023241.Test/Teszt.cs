@@ -33,7 +33,7 @@ namespace W5G7GZ_HFT_2023241.Test
             {
 
                 #region authorList
-                Author author1 = new Author() { AuthorID = 1, AuthorName = "Márai Sándor", BirthYear = 1900, Nationality = "Hungarian" };
+                Author author1 = new Author() { AuthorID = 1, AuthorName = "Márai Sándor", BirthYear = 1911, Nationality = "Hungarian" };
                 Author author2 = new Author() { AuthorID = 2, AuthorName = "Szabó Magda", BirthYear = 1917, Nationality = "Hungarian" };
                 Author author3 = new Author() { AuthorID = 3, AuthorName = "Esterházy Péter", BirthYear = 1950, Nationality = "Hungarian" };
 
@@ -46,7 +46,7 @@ namespace W5G7GZ_HFT_2023241.Test
                 #endregion
 
                 #region bookList
-                Author author10 = new Author() { AuthorID = 1, AuthorName = "Márai Sándor", BirthYear = 1900, Nationality = "Hungarian" };
+                Author author10 = new Author() { AuthorID = 1, AuthorName = "Márai Sándor", BirthYear = 1911, Nationality = "Hungarian" };
                 Author author20 = new Author() { AuthorID = 2, AuthorName = "Szabó Magda", BirthYear = 1917, Nationality = "Hungarian" };
                 Author author30 = new Author() { AuthorID = 3, AuthorName = "Esterházy Péter", BirthYear = 1950, Nationality = "Hungarian" };
                 Author author40 = new Author() { AuthorID = 4, AuthorName = "Jókai Mór", BirthYear = 1950, Nationality = "Hungarian" };
@@ -55,7 +55,6 @@ namespace W5G7GZ_HFT_2023241.Test
                 Publisher publisher1 = new Publisher() { PublisherID = 1, PublisherName = "Luther Kiadó", Headquarters = "Budapest", FoundatitonYear = 1945 };
                 Publisher publisher2 = new Publisher() { PublisherID = 2, PublisherName = "Kalligram", Headquarters = "Bratislava", FoundatitonYear = 1992 };
                 Publisher publisher3 = new Publisher() { PublisherID = 3, PublisherName = "Helikon", Headquarters = "Budapest", FoundatitonYear = 1949 };
-                //Publisher publisher4 = new Publisher() { PublisherID = 3, PublisherName = "Nevesincs Kiadó", Headquarters = "Budapest", FoundatitonYear = 2023 };
 
                 Book book1 = new Book() { BookID = 1, AuthorID = author1.AuthorID, PublisherID = publisher1.PublisherID, Price = 5000, Title = "Embers", Genre = "Novel", ISBN = "9789631440504", PublicationYear = 1942, Author = author1, Publisher = publisher1 };
                 Book book2 = new Book() { BookID = 2, AuthorID = author2.AuthorID, PublisherID = publisher2.PublisherID, Price = 4500, Title = "Az ajtó", Genre = "Novel", ISBN = "9780062314404", PublicationYear = 1987, Author = author2, Publisher = publisher2 };
@@ -136,8 +135,6 @@ namespace W5G7GZ_HFT_2023241.Test
             [Test]
             public void ReadValidIdShouldReturnBook()
             {
-                //var book = this.bookLogic.Read(1); 
-                //Assert.That(book.Title, Is.EqualTo("Embers"));
 
                 //ARRANGE 
                 var author1 = new Author() { AuthorID = 1, AuthorName = "Márai Sándor", BirthYear = 1900, Nationality = "Hungarian" };
@@ -198,23 +195,6 @@ namespace W5G7GZ_HFT_2023241.Test
 
             }
 
-            [Test]
-            public void GenresForAuthors_Test()
-            {
-                var result = bookLogic.GenresForAuthors();
-
-
-                IEnumerable<GenresForAuthorsClass> expectedResult = new List<GenresForAuthorsClass>
-{
-                    new GenresForAuthorsClass{ AuthorName = "Márai Sándor", Genres = new List<string> {"Novel" } },
-                    new  GenresForAuthorsClass{ AuthorName = "Szabó Magda", Genres = new List<string> { "Novel", "Historic novel" } },
-                    new GenresForAuthorsClass { AuthorName = "Esterházy Péter", Genres = new List<string>{ "Novel" } }
-                };
-
-
-                Assert.That(expectedResult, Is.EqualTo(result));
-
-            }
 
             [Test]
             public void AuthorWithTheMostBooks_Test()
@@ -224,69 +204,32 @@ namespace W5G7GZ_HFT_2023241.Test
                 var expectedresult = new KeyValuePair<string, int>("Szabó Magda", 2);
                 Assert.That(result, Is.EqualTo(expectedresult));
             }
-            #region visol
-            //public IQueryable<Author> FakeAuthorObjects()
-            //{
-            //    Author author1 = new Author() { AuthorID = 1, AuthorName = "Márai Sándor", BirthYear = 1900, Nationality = "Hungarian" };
-            //    Author author2 = new Author() { AuthorID = 2, AuthorName = "Szabó Magda", BirthYear = 1917, Nationality = "Hungarian" };
-            //    Author author3 = new Author() { AuthorID = 3, AuthorName = "Esterházy Péter", BirthYear = 1950, Nationality = "Hungarian" };
 
-            //    List<Author> authorList = new List<Author>
-            //    {
-            //        author1,
-            //        author2,
-            //        author3
-            //    };
+            [Test]
+            public void AuthorsBornInDecade_Test()
+            {
+                // ARRANGE
+                int startYear = 1910;
 
-            //    return authorList.AsQueryable();
+                // ACT
+                var authors = bookLogic.AuthorsBornInDecade(startYear);
 
-            //}
+                // ASSERT
+                Assert.That(authors.Count, Is.EqualTo(2));
+            }
 
-            //public IQueryable<Book> FakeBookObjects()
-            //{
-            //    Author author1 = new Author() { AuthorID = 1, AuthorName = "Márai Sándor", BirthYear = 1900, Nationality = "Hungarian" };
-            //    Author author2 = new Author() { AuthorID = 2, AuthorName = "Szabó Magda", BirthYear = 1917, Nationality = "Hungarian" };
-            //    Author author3 = new Author() { AuthorID = 3, AuthorName = "Esterházy Péter", BirthYear = 1950, Nationality = "Hungarian" };
-            //    Author author4 = new Author() { AuthorID = 4, AuthorName = "Jókai Mór", BirthYear = 1950, Nationality = "Hungarian" };
-            //    Author author5 = new Author() { AuthorID = 4, AuthorName = "Gipsz Jakab", BirthYear = 2010, Nationality = "Hungarian" };
+            [Test]
+            public void BooksByGenre_Test()
+            {
+                // ARRANGE
+                string genre = "Novel";
 
-            //    Publisher publisher1 = new Publisher() { PublisherID = 1, PublisherName = "Luther Kiadó", Headquarters = "Budapest", FoundatitonYear = 1945 };
-            //    Publisher publisher2 = new Publisher() { PublisherID = 2, PublisherName = "Kalligram", Headquarters = "Bratislava", FoundatitonYear = 1992 };
-            //    Publisher publisher3 = new Publisher() { PublisherID = 3, PublisherName = "Helikon", Headquarters = "Budapest", FoundatitonYear = 1949 };
-            //    //Publisher publisher4 = new Publisher() { PublisherID = 3, PublisherName = "Nevesincs Kiadó", Headquarters = "Budapest", FoundatitonYear = 2023 };
+                // ACT
+                var books = bookLogic.BooksByGenre(genre);
 
-            //    Book book1 = new Book() { BookID = 1, AuthorID = author1.AuthorID, PublisherID = publisher1.PublisherID, Price = 5000, Title = "Embers", Genre = "Novel", ISBN = "9789631440504", PublicationYear = 1942, Author = author1, Publisher = publisher1 };
-            //    Book book2 = new Book() { BookID = 2, AuthorID = author2.AuthorID, PublisherID = publisher2.PublisherID, Price = 4500, Title = "Az ajtó", Genre = "Novel", ISBN = "9780062314404", PublicationYear = 1987, Author = author2, Publisher = publisher2 };
-            //    Book book3 = new Book() { BookID = 3, AuthorID = author3.AuthorID, PublisherID = publisher3.PublisherID, Price = 5500, Title = "Celestial Harmonies", Genre = "Novel", ISBN = "9781400078748", PublicationYear = 2000, Author = author3, Publisher = publisher3 };
-            //    Book book4 = new Book() { BookID = 4, AuthorID = author2.AuthorID, PublisherID = publisher3.PublisherID, Price = 5500, Title = "Abigél", Genre = "Historic novel", ISBN = "9789634158493", PublicationYear = 1970, Author = author2, Publisher = publisher3 };
-
-
-            //    List<Book> bookList = new List<Book>
-            //    {
-            //        book1,
-            //        book2,
-            //        book3,
-            //        book4
-            //    };
-
-            //    return bookList.AsQueryable();
-            //}
-            //public IQueryable<Publisher> FakePublisherObjects()
-            //{
-            //    Publisher publisher1 = new Publisher() { PublisherID = 1, PublisherName = "Magveto", Headquarters = "Budapest", FoundatitonYear = 1945 };
-            //    Publisher publisher2 = new Publisher() { PublisherID = 2, PublisherName = "Kalligram", Headquarters = "Bratislava", FoundatitonYear = 1992 };
-            //    Publisher publisher3 = new Publisher() { PublisherID = 3, PublisherName = "Helikon", Headquarters = "Budapest", FoundatitonYear = 1949 };
-
-            //    List<Publisher> publisherList = new List<Publisher>
-            //    {
-            //        publisher1,
-            //        publisher2,
-            //        publisher3
-            //    };
-
-            //    return publisherList.AsQueryable();
-            //}
-            #endregion
+                // ASSERT
+                Assert.That(books.Count, Is.EqualTo(3));
+            }
 
 
         }

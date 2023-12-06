@@ -201,9 +201,9 @@ namespace W5G7GZ_HFT_2023241.Client
         {
             //IEnumerable<KeyValuePair<string, int>> BookCountPerPublisher();
             //IEnumerable<string> AuthorsWithMultipleBooks();
-            //KeyValuePair<string, int> AuthorWithTheMostBooks();
             //int PriceOfAllBooks();
-            //IEnumerable<GenresForAuthorsClass> GenresForAuthors();
+            //List<Author> AuthorBornInDecase(int year);
+            //List<Book> BooksByGenre(string genre)
 
             if (entity == "BookCountPerPublisher")
             {
@@ -225,11 +225,16 @@ namespace W5G7GZ_HFT_2023241.Client
                 }
                 Console.ReadLine();
             }
-            if (entity == "AuthorWithTheMostBooks") //
+            if (entity == "BooksByGenre") 
             {
-                KeyValuePair<string, int> AWTMB = rest.GetSingle<KeyValuePair<string, int>>("/api/NonCrudField/AuthorWithTheMostBooks");
+                Console.WriteLine("Please enter genre (try: Dystopic Fiction): ");
+                string genre = Console.ReadLine();
+                List<Book> BBG = rest.GetSingle<List<Book>>("/api/NonCrudField/BooksByGenre?genre=" + genre);
+                foreach (var item in BBG)
+                {
+                    Console.WriteLine(item.ToString());
+                }
                 
-                Console.WriteLine($"{AWTMB.Key} has the most books: {AWTMB.Value} books");
                 Console.ReadLine();
             }
             if (entity == "PriceOfAllBooks")
@@ -238,12 +243,15 @@ namespace W5G7GZ_HFT_2023241.Client
                 Console.WriteLine($"Price of all books combined: {sum}");
                 Console.ReadLine();
             }
-            if (entity == "GenresForAuthors") //
+            if (entity == "AuthorBornInDecade") 
             {
-                IEnumerable<GenresForAuthorsClass> GFAC = rest.GetSingle<IEnumerable<GenresForAuthorsClass>>("/api/NonCrudField/GenresForAuthors");
-                foreach (var item in GFAC)
+                Console.WriteLine("Please enter a decade: ");
+                int year = int.Parse(Console.ReadLine());
+
+                List<Author> ABID = rest.GetSingle<List<Author>>("/api/NonCrudField/AuthorsBornInDecade?year=" + year);
+                foreach (var item in ABID)
                 {
-                    Console.WriteLine($"{item.AuthorName}: {String.Join(", ", item.Genres)}");
+                    Console.WriteLine($"{item.AuthorName}: {item.BirthYear}"); 
                 }
                 Console.ReadLine();
             }
@@ -277,9 +285,9 @@ namespace W5G7GZ_HFT_2023241.Client
             var nonCrudSubMenu = new ConsoleMenu(args, level: 1)
                 .Add("Book Count Per Publisher", () => NonCrud("BookCountPerPublisher"))
                 .Add("Authors With Multiple Books", () => NonCrud("AuthorsWithMultipleBooks"))
-                .Add("Author With The Most Books", () => NonCrud("AuthorWithTheMostBooks"))
                 .Add("Price Of All Books", () => NonCrud("PriceOfAllBooks"))
-                .Add("Genres For Authors", () => NonCrud("GenresForAuthors"))
+                .Add("Books By Genre", () => NonCrud("BooksByGenre"))
+                .Add("Author Born In Decade", () => NonCrud("AuthorBornInDecade"))
                 .Add("Exit", ConsoleMenu.Close);
 
 
@@ -290,7 +298,6 @@ namespace W5G7GZ_HFT_2023241.Client
                  .Add("Non CRUD", () => nonCrudSubMenu.Show())
                  .Add("Exit", ConsoleMenu.Close);
 
-            Console.WriteLine("asd");
             menu.Show();
         }
     }

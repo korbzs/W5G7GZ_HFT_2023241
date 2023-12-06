@@ -29,9 +29,9 @@ namespace W5G7GZ_HFT_2023241.Endpoint.Controllers
             return this.logic.AuthorsWithMultipleBooks();
         }
         [HttpGet]
-        public KeyValuePair<string, int> AuthorWithTheMostBooks()
+        public List<Book> BooksByGenre(string genre)
         {
-            return this.logic.AuthorWithTheMostBooks();
+            return this.logic.BooksByGenre(genre);
         }
         [HttpGet]
         public int PriceOfAllBooks()
@@ -39,9 +39,9 @@ namespace W5G7GZ_HFT_2023241.Endpoint.Controllers
             return this.logic.PriceOfAllBooks();
         }
         [HttpGet]
-        public IEnumerable<GenresForAuthorsClass> GenresForAuthors()
+        public List<Author> AuthorsBornInDecade(int year)
         {
-            return this.logic.GenresForAuthors();
+            return this.logic.AuthorsBornInDecade(year);
         }
     }
 }
